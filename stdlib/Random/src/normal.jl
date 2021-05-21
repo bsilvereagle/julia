@@ -44,10 +44,9 @@ julia> randn(rng, ComplexF32, (2, 3))
     inside the following function.
     =#
     @inbounds begin
-        r = rand(rng, UInt52Raw())
+        r = rand(rng, UInt52())
 
         # the following code is identical to the one in `_randn(rng::AbstractRNG, r::UInt64)`
-        r &= 0x000fffffffffffff
         rabs = Int64(r>>1) # One bit for the sign
         idx = rabs & 0xFF
         x = ifelse(r % Bool, -rabs, rabs)*wi[idx+1]
@@ -224,7 +223,7 @@ for randfun in [:randn, :randexp]
                 GC.@preserve A rand!(rng, UnsafeView{UInt64}(pointer(A), length(A)))
 
                 for i in eachindex(A)
-                    @inbounds A[i] = $_randfun(rng, reinterpret(UInt64, A[i]))
+                    @inbounds A[i] = $_randfun(rng, reinterpret(UInt64, A[i]) >>> 12)
                 end
             end
             A
