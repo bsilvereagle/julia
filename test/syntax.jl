@@ -2255,7 +2255,7 @@ end) === 1
 # issue #35201
 h35201(x; k=1) = (x, k)
 f35201(c) = h35201((;c...), k=true)
-@test f35201(Dict(:a=>1,:b=>3)) === ((a=1,b=3), true)
+@test f35201([:a=>1,:b=>3]) === ((a=1,b=3), true)
 
 
 @testset "issue #34544/35367" begin

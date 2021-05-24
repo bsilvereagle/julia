@@ -2201,14 +2201,14 @@ julia> findall(!iszero, A)
 
 julia> d = Dict(:A => 10, :B => -1, :C => 0)
 Dict{Symbol, Int64} with 3 entries:
+  :C => 0
   :A => 10
   :B => -1
-  :C => 0
 
 julia> findall(x -> x >= 0, d)
 2-element Vector{Symbol}:
- :A
  :C
+ :A
 
 ```
 """
